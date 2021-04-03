@@ -4,19 +4,19 @@ use std::fmt;
 
 #[derive(Copy, Clone)]
 enum Suit {
-	Spade,
-	Heart,
-	Diamond,
-	Club,
+    Spade,
+    Club,
+    Heart,
+    Diamond,
 }
 
 impl fmt::Display for Suit {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		match *self {
 			Suit::Spade => write!(f, "Spade"),
+			Suit::Club => write!(f, "Club"),
 			Suit::Heart => write!(f, "Heart"),
 			Suit::Diamond => write!(f, "Diamond"),
-			Suit::Club => write!(f, "Club"),
 		}
 	}
 }
@@ -66,9 +66,10 @@ impl Deck {
 
 			match i {
 				0 => sui = Suit::Spade,
-				1 => sui = Suit::Heart,
-				2 => sui = Suit::Diamond,
-				_ => sui = Suit::Club,
+				1 => sui = Suit::Club,
+				2 => sui = Suit::Heart,
+				3 => sui = Suit::Diamond,
+                _ => panic!("ERROR: Suit index is less than zero or greater than three!"),
 			}
 
 			let col: bool;
@@ -91,22 +92,19 @@ impl Deck {
 	}
 
     fn swap(&mut self, i: usize, j: usize) {
-        let temp : Card;
-        temp = self.cards[i];
-        self.cards[i] = self.cards[j];
-        self.cards[j] = temp;
+        if i != j  {
+            let temp : Card;
+            temp = self.cards[i];
+            self.cards[i] = self.cards[j];
+            self.cards[j] = temp;
+        }
     }
 
 	// shuffle using Fisher-Yates
 	fn shuffle(&mut self) {
-        let mut new_deck : Deck = Deck::new();
-
         let mut rng = thread_rng();
-        let mut roll;
-
-        // last number doesn't get swapped anywhere
-        for i in (1..52).rev() {
-            roll = rng.gen_range(0..i);
+        for i in 0..self.cards.len()-1 {
+            let roll = rng.gen_range(i..self.cards.len());
             self.swap(i,roll);
         }
 	}
@@ -118,10 +116,13 @@ fn main() {
 	let mut deck: Deck = Deck::new();
 
 	for card in deck.cards.iter() {
-		card.print();
+        card.print();
 	}
 
+    deck.shuffle();
 
-    deck.shuffle()
+	for card in deck.cards.iter() {
+        card.print();
+	}
 
 }
