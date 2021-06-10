@@ -107,13 +107,13 @@ impl Deck {
     }
 
 	// shuffle using Fisher-Yates
-	fn shuffle(&mut self) {
-        let mut rng = thread_rng();
+    fn shuffle(&mut self) {
+    let mut rng = thread_rng();
         for i in 0..self.cards.len()-1 {
             let roll = rng.gen_range(i..self.cards.len());
             self.swap(i,roll);
         }
-	}
+    }
 
     fn deal(&mut self, player: &mut Player, n_cards: i32) {
         for _ in 0..n_cards {
