@@ -4,10 +4,10 @@ Super simple blackjack simulator written in Rust! There's a function for playing
 
 Just take a peek in `src/main.rs`, the code should mostly be self explanatory!
 
-By default, the program runs the simulation and spits out the results on the commandline and file.
+By default, the program runs the simulation and spits out the results on the command line and file.
 
 Just do:
 
 `cargo run`
 
-Just a warning: this code is neither clean nor efficient, just a quick project for fun!
+Just a warning: this code is neither clean nor efficient, just a quick project for fun! I also removed any warnings that may occur for unused functions.
